@@ -22,8 +22,8 @@ public class ArrayDeque <T> {
     private void resize(double capacity) {
         T[] p = (T[]) new Object[(int) (items.length * capacity)];
         int sentinel = addOne(nextFirst);
-        System.arraycopy(items, sentinel, p, 0, (items.length - sentinel));
-        System.arraycopy(items, 0, p, (items.length - sentinel), sentinel);
+        System.arraycopy(items, sentinel, p, 0, (size - sentinel));
+        System.arraycopy(items, 0, p, (size - sentinel), sentinel);
         items = p;
         nextFirst = minusOne(0);
         nextLast = size;
@@ -97,5 +97,15 @@ public class ArrayDeque <T> {
     public T get(int index) {
         int idx = (nextFirst + 1 + index) % items.length;
         return items[idx];
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque<Integer> L1 = new ArrayDeque();
+        for (int i=0; i < 32; i++) {
+            L1.addLast(i);
+        }
+        for (int i=0; i < 25; i++) {
+            L1.removeLast();
+        }
     }
 }
