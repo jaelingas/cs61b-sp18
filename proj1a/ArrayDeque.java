@@ -76,7 +76,7 @@ public class ArrayDeque <T> {
         if (first != null) {
             size--;
         }
-        if (size < items.length * 0.25) {
+        if (size < items.length * 0.25 && items.length > 16) {
             resize(0.5);
         }
         return first;
@@ -89,7 +89,7 @@ public class ArrayDeque <T> {
         if (last != null) {
             size--;
         }
-        if (size < items.length * 0.25) {
+        if (size < items.length * 0.25 && items.length > 16) {
             resize(0.5);
         }
         return last;
