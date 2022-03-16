@@ -21,31 +21,30 @@ public class ArrayDeque <T> {
 
     private void resize(double capacity) {
         T[] p = (T[]) new Object[(int) (items.length * capacity)];
-        System.arraycopy(items, nextFirst + 1, p, 0, (items.length - nextFirst - 1));
-        System.arraycopy(items, 0, p, (items.length - nextFirst - 1), nextFirst + 1);
+        int sentinel = addOne(nextFirst);
+        System.arraycopy(items, sentinel, p, 0, (items.length - sentinel));
+        System.arraycopy(items, 0, p, (items.length - sentinel), sentinel);
         items = p;
         nextFirst = minusOne(0);
         nextLast = size;
     }
 
     public void addFirst(T item) {
-        items[nextFirst] = item;
-        size++;
         if (size == items.length) {
             resize(2);
-        } else {
-            nextFirst = minusOne(nextFirst);
         }
+        items[nextFirst] = item;
+        nextFirst = minusOne(nextFirst);
+        size++;
     }
 
     public void addLast(T item) {
-        items[nextLast] = item;
-        size++;
         if (size == items.length) {
             resize(2);
-        } else {
-            nextLast  = addOne(nextLast);
         }
+        items[nextLast] = item;
+        nextLast  = addOne(nextLast);
+        size++;
     }
 
     public boolean isEmpty() {
@@ -98,21 +97,5 @@ public class ArrayDeque <T> {
     public T get(int index) {
         int idx = (nextFirst + 1 + index) % items.length;
         return items[idx];
-    }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> L1 = new ArrayDeque();
-        L1.addLast(0);
-        L1.addLast(1);
-        L1.addLast(2);
-        L1.addLast(3);
-        System.out.println(L1.removeFirst());
-        L1.addLast(5);
-        System.out.println(L1.isEmpty());
-        L1.addLast(7);
-        L1.addLast(8);
-        L1.addLast(9);
-        L1.addLast(10);
-        System.out.println(L1.removeFirst());
     }
 }
